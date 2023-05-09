@@ -54,7 +54,7 @@ jobs:
            echo $GITHUB_REF_NAME
            echo $GITHUB_REF
            echo cc=$GITHUB_REF_NAME
-           bb=$(git branch | grep $cc)
+           bb=$(git ls-remote --heads | grep $cc)
            #echo $dd
            #dde=$(git ls-remote --heads origin $(cc))
            #echo $dde

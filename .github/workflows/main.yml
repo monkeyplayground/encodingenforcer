@@ -6,6 +6,8 @@ on:
 jobs:
   getauthtoken:
     runs-on: ubuntu-latest
+    outputs:
+      auth_token: ${{ steps.generate_token.outputs.token }}
     steps:
       - name: Generate token
         id: generate_token
@@ -39,5 +41,7 @@ jobs:
     needs: getauthtoken
     steps:
       - name: ConfirmOK
+      - env:
+          AUTH_TOKEN: ${{needs.getauthtoken.outputs.auth_token}}
         run: |
           echo "Came through: ${AUTH_TOKEN}"

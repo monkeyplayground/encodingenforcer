@@ -53,5 +53,5 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          repository: secondaryrepo
+          repository: monkeyplayground/secondaryrepo
           token: ${{ env.AUTH_TOKEN }}

@@ -54,4 +54,4 @@ jobs:
         with:
           fetch-depth: 0
           repository: secondaryrepo
-          token: ${{ AUTH_TOKEN }}
+          token: ${{ env.AUTH_TOKEN }}

@@ -50,7 +50,7 @@ jobs:
            pup: $GITHUB_REF_NAME
         run: |
            deff=$DEFAULT_BRANCH
-           muckyPup=$pup
+           muckyPup=`if [ -z "$(GITHUB_REF_NAME)" ]; then echo $GITHUB_REF; else echo $GITHUB_REF_NAME; fi`
            echo $deff
            echo $muckyPup
            echo $GITHUB_REF_NAME

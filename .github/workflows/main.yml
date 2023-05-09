@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
+env:
+  DEFAULT_BRANCH: dev
 jobs:
 #  getauthtoken:
 #    runs-on: ubuntu-latest
@@ -11,12 +13,10 @@ jobs:
  checkoutrepos:
     runs-on: ubuntu-latest
     steps:
-      - name: Get Branch Name
-        id: get_branch_name
-        shell: bash
-        run: echo "${GITHUB_REF} - ${GITHUB_REF_NAME}"
-#        run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)"
-        #>> $GITHUB_ENV
+#      - name: Get Branch Name
+#        id: get_branch_name
+#        shell: bash
+#        run: echo "ACTIVE_BRANCH_NAME=${GITHUB_REF_NAME}" >> $GITHUB_ENV
       - name: Generate token
         id: generate_token
         uses: tibdex/github-app-token@v1
@@ -43,6 +43,12 @@ jobs:
         with:
          fetch-depth: 0
          path: enforcer
+      - name: Get Repo B Branch
+        id: get_repo_b_branch
+        shell: bash
+        run: !
+           branchCheck=`if [ -z "$(git ls-remote --heads origin ${{GITHUB_REF_NAME}})" ]; then echo ${{DEFAULT_BRANCH}}; else echo ${{GITHUB_REF_NAME}}; fi`
+           echo ${branchCheck}
       - name: Checkout Repo B
         uses: actions/checkout@v3
         with:

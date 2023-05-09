@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  job:
+  getauthtoken:
     runs-on: ubuntu-latest
     steps:
       - name: Generate token
@@ -31,6 +31,13 @@ jobs:
 
       - name: Use token
         env:
-          TOKEN: ${{ steps.generate_token.outputs.token }}
+          AUTH_TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
-          echo "The generated token is masked: ${TOKEN}"
+          echo "The generated token is masked: ${AUTH_TOKEN}"
+  build:
+    runs-on: ubuntu-latest
+    needs: getauthtoken
+    steps:
+      - name: ConfirmOK
+        run: |
+          echo "Came through: ${AUTH_TOKEN}"

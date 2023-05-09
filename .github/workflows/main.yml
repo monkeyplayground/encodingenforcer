@@ -4,10 +4,12 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  getauthtoken:
+#  getauthtoken:
+#    runs-on: ubuntu-latest
+#    outputs:
+#      auth_token: ${{ steps.usetoken.outputs.auth_token }}
+ checkoutrepos:
     runs-on: ubuntu-latest
-    outputs:
-      auth_token: ${{ steps.usetoken.outputs.auth_token }}
     steps:
       - name: Generate token
         id: generate_token
@@ -30,24 +32,6 @@ jobs:
 
           # Optional.
           # repository: owner/repo
-
-      - name: Use token
-        id: usetoken
-        #env:
-        #  AUTH_TOKEN: ${{ steps.generate_token.outputs.token }}
-#        run: |
-#          echo "The generated token is masked: ${AUTH_TOKEN}"
-        run: |
-           echo "auth_token=${{ steps.generate_token.outputs.token }}" >> $GITHUB_OUTPUT
-  build:
-    runs-on: ubuntu-latest
-    needs: getauthtoken
-    steps:
-#      - name: ConfirmOK
-#        env:
-#          AUTH_TOKEN: ${{needs.getauthtoken.outputs.auth_token}}
-#        run: |
-#          echo "Came through: ${AUTH_TOKEN}"
       - name: Checkout Repo A
         uses: actions/checkout@v2
         with:
@@ -57,4 +41,31 @@ jobs:
         with:
           fetch-depth: 0
           repository: monkeyplayground/secondaryrepo
-          token: ${{needs.getauthtoken.outputs.auth_token}}
+          token: ${{ steps.generate_token.outputs.token }}
+#      - name: Use token
+#        id: usetoken
+#        env:
+#          AUTH_TOKEN: ${{ steps.generate_token.outputs.token }}
+#        run: |
+#          echo "The generated token is masked: ${AUTH_TOKEN}"
+#        run: |
+#           echo "auth_token=${{ steps.generate_token.outputs.token }}" >> $GITHUB_OUTPUT
+#  build:
+#    runs-on: ubuntu-latest
+#    needs: getauthtoken
+#    steps:
+#      - name: ConfirmOK
+#        env:
+#          AUTH_TOKEN: ${{needs.getauthtoken.outputs.auth_token}}
+#        run: |
+#          echo "Came through: ${AUTH_TOKEN}"
+#      - name: Checkout Repo A
+#        uses: actions/checkout@v2
+#        with:
+#         fetch-depth: 0
+#      - name: Checkout Repo B
+#        uses: actions/checkout@v2
+#        with:
+#          fetch-depth: 0
+#          repository: monkeyplayground/secondaryrepo
+#          token: ${{needs.getauthtoken.outputs.auth_token}}

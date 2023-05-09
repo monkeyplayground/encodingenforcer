@@ -46,9 +46,11 @@ jobs:
       - name: Get Repo B Branch
         id: get_repo_b_branch
         shell: bash
+        env:
+           pup: $GITHUB_REF_NAME
         run: |
            deff=$DEFAULT_BRANCH
-           muckyPup=$GITHUB_REF_NAME
+           muckyPup=$pup
            branchCheck=`if [ -z "$(git ls-remote --heads origin $muckyPup)" ]; then echo $deff; else echo $muckyPup; fi`
            echo "ACTIVE_B_BRANCH=${branchCheck}" >> $GITHUB_ENV
       - name: Checkout Repo B

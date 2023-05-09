@@ -54,11 +54,11 @@ jobs:
            echo $GITHUB_REF_NAME
            echo $GITHUB_REF
            echo cc=$GITHUB_REF_NAME
-           dd=$(git ls-remote --heads origin $cc)
-           echo $dd
-           dde=$(git ls-remote --heads origin $(cc))
-           echo $dde
-           bb=$(git ls-remote --heads origin $GITHUB_REF_NAME)
+           bb=$(git branch | grep $cc)
+           #echo $dd
+           #dde=$(git ls-remote --heads origin $(cc))
+           #echo $dde
+           #bb=$(git ls-remote --heads origin $GITHUB_REF_NAME)
            echo $bb
            branchCheck=`if [ -z $bb ]; then echo $DEFAULT_BRANCH; else echo $GITHUB_REF_NAME; fi`
            echo "ACTIVE_B_BRANCH=${branchCheck}" >> $GITHUB_ENV

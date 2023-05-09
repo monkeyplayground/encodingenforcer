@@ -53,7 +53,8 @@ jobs:
            echo $deff
            echo $GITHUB_REF_NAME
            echo $GITHUB_REF
-           bb=`git ls-remote --heads origin $GITHUB_REF_NAME`
+           bb=$(git ls-remote --heads origin $GITHUB_REF_NAME)
+           echo $bb
            branchCheck=`if [ -z $bb ]; then echo $DEFAULT_BRANCH; else echo $GITHUB_REF_NAME; fi`
            echo "ACTIVE_B_BRANCH=${branchCheck}" >> $GITHUB_ENV
       - name: Checkout Repo B

@@ -47,7 +47,7 @@ jobs:
         id: get_repo_b_branch
         shell: bash
         env:
-           FOO_NAME: ${{GITHUB_REF_NAME}}
+           FOO_NAME: $GITHUB_REF_NAME
         run: |
            branchCheck = `if [ -z "$(git ls-remote --heads origin $FOO_NAME)" ]; then echo $DEFAULT_BRANCH; else echo $FOO_NAME; fi`
            echo "ACTIVE_B_BRANCH=${branchCheck}" >> $GITHUB_ENV

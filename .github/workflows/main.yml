@@ -55,7 +55,7 @@ jobs:
            echo $muckyPup
            echo $GITHUB_REF_NAME
            echo $GITHUB_REF
-           branchCheck=`if [ -z "$(git ls-remote --heads origin $muckyPup)" ]; then echo $deff; else echo $muckyPup; fi`
+           branchCheck=`if [ -z "$(git ls-remote --heads origin $(GITHUB_REF_NAME))" ]; then echo $deff; else echo $muckyPup; fi`
            echo "ACTIVE_B_BRANCH=${branchCheck}" >> $GITHUB_ENV
       - name: Checkout Repo B
         uses: actions/checkout@v3
